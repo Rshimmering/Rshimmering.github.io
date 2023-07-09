@@ -1,22 +1,12 @@
-WIDGET = {
-  "CONFIG": {
-    "modules": "01234",
-    "background": "5",
-    "tmpColor": "#548e87",
-    "tmpSize": "16",
-    "cityColor": "#548e87",
-    "citySize": "16",
-    "aqiColor": "#865858",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "15px 10px 10px 20px",
-    "shadow": "0",
-    "language": "auto",
-    "borderRadius": "5",
-    "fixed": "false",
-    "vertical": "top",
-    "horizontal": "left",
-    "key": "e63661998ba1418b8e8a149f21255ed2"
-  }
-}
+(function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+  window.SeniverseWeatherWidget('show', {
+    flavor: "slim",
+    location: "WS10730EM8EV",
+    geolocation: false,
+    language: "zh-Hans",
+    unit: "c",
+    theme: "auto",
+    token: "5683d347-5ac3-4049-9247-a228225c0538",
+    hover: "enabled",
+    container: "tp-weather-widget"
+  })
