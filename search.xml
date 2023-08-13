@@ -355,11 +355,11 @@
       
         <tags>
             
+            <tag> camp </tag>
+            
             <tag> bar </tag>
             
             <tag> barh </tag>
-            
-            <tag> camp </tag>
             
         </tags>
       
@@ -409,11 +409,11 @@
       
         <tags>
             
-            <tag> camp </tag>
-            
             <tag> scatter </tag>
             
             <tag> text </tag>
+            
+            <tag> camp </tag>
             
         </tags>
       
