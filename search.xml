@@ -4,6 +4,106 @@
   
     
     <entry>
+      <title>Python——数据分组</title>
+      <link href="/posts/8a0bd81.html"/>
+      <url>/posts/8a0bd81.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="pd-cut-参数介绍">pd.cut()参数介绍</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.cut( x, bins, right=<span class="literal">True</span>, labels=<span class="literal">None</span>, retbins=<span class="literal">False</span>, precision=<span class="number">3</span>, include_lowest=<span class="literal">False</span>, duplicates=<span class="string">&#x27;raise&#x27;</span>, )</span><br></pre></td></tr></table></figure><blockquote><p><code>x</code>： 一维数组（对应前边例子中提到的销售业绩）</p><p><code>bins</code> ：整数，标量序列或者间隔索引，是进行分组的依据，</p><ul><li>如果填入整数n，则表示将x中的数值分成等宽的n份（即每一组内的最大值与最小值之差约相等）；</li><li>如果是标量序列，序列中的数值表示用来分档的分界值</li><li>如果是间隔索引，“ bins”的间隔索引必须不重叠</li></ul><p><code>right</code> ：布尔值，默认为True表示包含最右侧的数值</p><ul><li>当“ right = True”（默认值）时，则“ bins”=[1、2、3、4]表示（1,2]，（2,3],（3,4]</li><li>当<code>bins</code>是一个间隔索引时，该参数被忽略。</li></ul><p><code>labels</code>: 数组或布尔值，可选.指定分箱的标签</p><ul><li>如果是数组，长度要与分箱个数一致，比如“ bins”=[1、2、3、4]表示（1,2]，（2,3],（3,4]一共3个区间，则labels的长度也就是标签的个数也要是3</li><li>如果为False，则仅返回分箱的整数指示符，即x中的数据在第几个箱子里</li><li>当bins是间隔索引时，将忽略此参数</li></ul><p><code>retbins</code>： 是否显示分箱的分界值。默认为False，当bins取整数时可以设置retbins=True以显示分界值，得到划分后的区间</p><p><code>precision</code>：整数，默认3，存储和显示分箱标签的精度。</p><p><code>include_lowest</code>：布尔值，表示区间的左边是开还是闭，默认为false，也就是不包含区间左边。</p><p><code>duplicates</code>：如果分箱临界值不唯一，则引发ValueError或丢弃非唯一</p></blockquote><h1 id="实例">实例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># 创建待排序dataframe</span></span><br><span class="line">name = [</span><br><span class="line">    <span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Lillian&#x27;</span>, <span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Lillian&#x27;</span>, <span class="string">&#x27;ll&#x27;</span>, <span class="string">&#x27;pp&#x27;</span>, <span class="string">&#x27;kk&#x27;</span>, <span class="string">&#x27;mm&#x27;</span></span><br><span class="line">]</span><br><span class="line">grade = [<span class="number">97</span>, <span class="number">83</span>, <span class="number">89</span>, <span class="number">60</span>, <span class="number">50</span>, <span class="number">80</span>, <span class="number">70</span>, <span class="number">88</span>, <span class="number">68</span>, <span class="number">78</span>]</span><br><span class="line">df_grade = pd.DataFrame(name, columns=[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">df_grade[<span class="string">&#x27;grade&#x27;</span>] = pd.DataFrame(grade)</span><br><span class="line"></span><br><span class="line">df_grade</span><br></pre></td></tr></table></figure><img src="/posts/8a0bd81/1695567393408.png" class="" width="1695567393408"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df_grade[<span class="string">&quot;分类1&quot;</span>] = pd.cut(x=df_grade[<span class="string">&#x27;grade&#x27;</span>],</span><br><span class="line">                         bins=[<span class="number">0</span>, <span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>],</span><br><span class="line">                         right=<span class="literal">False</span>)</span><br><span class="line">df_grade</span><br></pre></td></tr></table></figure><img src="/posts/8a0bd81/1695567468971.png" class="" width="1695567468971"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df_grade[<span class="string">&quot;分类2&quot;</span>] = pd.cut(x=df_grade[<span class="string">&#x27;grade&#x27;</span>],</span><br><span class="line">                         bins=[<span class="number">0</span>, <span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>, <span class="number">100</span>],</span><br><span class="line">                         labels=[<span class="string">&#x27;不及格&#x27;</span>, <span class="string">&#x27;及格&#x27;</span>, <span class="string">&#x27;良好&#x27;</span>, <span class="string">&#x27;优良&#x27;</span>, <span class="string">&#x27;优秀&#x27;</span>],</span><br><span class="line">                         right=<span class="literal">False</span>)</span><br><span class="line">df_grade</span><br></pre></td></tr></table></figure><img src="/posts/8a0bd81/1695567481865.png" class="" width="1695567481865">]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——对齐方式、忽略警告</title>
+      <link href="/posts/cb837fa.html"/>
+      <url>/posts/cb837fa.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="对齐方式">对齐方式</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设置输出结果对齐方式</span></span><br><span class="line">pd.set_option(<span class="string">&#x27;display.unicode.ambiguous_as_wide&#x27;</span>,<span class="literal">True</span>)</span><br><span class="line">pd.set_option(<span class="string">&#x27;display.unicode.east_asian_width&#x27;</span>,<span class="literal">True</span>)</span><br></pre></td></tr></table></figure><h1 id="忽略警告">忽略警告</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——自定义排序</title>
+      <link href="/posts/c6bbf30d.html"/>
+      <url>/posts/c6bbf30d.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="none"></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># 创建待排序dataframe</span></span><br><span class="line">name = [<span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;Lillian&#x27;</span>]</span><br><span class="line">grade = [<span class="number">97</span>,<span class="number">83</span>,<span class="number">89</span>]</span><br><span class="line">df_grade = pd.DataFrame(name,columns=[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">df_grade[<span class="string">&#x27;grade&#x27;</span>] = pd.DataFrame(grade)</span><br><span class="line"><span class="comment"># 指定排列顺序 e.g.按姓名排序</span></span><br><span class="line">sort_list = [<span class="string">&#x27;Lillian&#x27;</span>, <span class="string">&#x27;Tom&#x27;</span>, <span class="string">&#x27;John&#x27;</span>]</span><br><span class="line">df_grade</span><br></pre></td></tr></table></figure><img src="/posts/c6bbf30d/1695566172193.png" class="" width="1695566172193"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df_grade.index = df_grade[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">sort_df_grade = df_grade.loc[sort_list]</span><br><span class="line">sort_df_grade</span><br></pre></td></tr></table></figure><img src="/posts/c6bbf30d/1695566192947.png" class="" width="1695566192947"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sort_list = [<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;e&#x27;</span>]</span><br><span class="line">data_merge[<span class="string">&#x27;类&#x27;</span>] = data_merge[<span class="string">&#x27;品类&#x27;</span>].astype(<span class="string">&#x27;category&#x27;</span>)</span><br><span class="line">data_merge[<span class="string">&#x27;类&#x27;</span>].cat.reorder_categories(sort_list, inplace=<span class="literal">True</span>)</span><br><span class="line">data_merge.sort_values(<span class="string">&#x27;类&#x27;</span>,inplace = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——修改列名</title>
+      <link href="/posts/9ccf6c0f.html"/>
+      <url>/posts/9ccf6c0f.html</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.columns=[<span class="string">&#x27;A&#x27;</span>,<span class="string">&#x27;B&#x27;</span>,<span class="string">&#x27;C&#x27;</span>,<span class="string">&#x27;D&#x27;</span>]</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>安知鱼主题</title>
       <link href="/posts/edad30be.html"/>
       <url>/posts/edad30be.html</url>
@@ -23,6 +123,56 @@
             <tag> hexo </tag>
             
             <tag> anzhiyu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——保存文件</title>
+      <link href="/posts/1a2a6127.html"/>
+      <url>/posts/1a2a6127.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="保存">保存</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table.to_excel(<span class="string">&#x27;文件名.xlsx&#x27;</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure><h1 id="pd-to-excel-一个excel文件保存多个工作表">pd.to_excel()一个excel文件保存多个工作表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">A = [[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">B = [[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>],[<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>]]</span><br><span class="line">df1 = pd.DataFrame(A)</span><br><span class="line">df2 = pd.DataFrame(B)</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> load_workbook </span><br><span class="line"><span class="comment">#先创建一个本地 2017.xlsx 文件</span></span><br><span class="line">book = load_workbook(<span class="string">&quot;2017.xlsx&quot;</span>)</span><br><span class="line">writer = pd.ExcelWriter(<span class="string">&quot;2017.xlsx&quot;</span>, engine=<span class="string">&#x27;openpyxl&#x27;</span>)</span><br><span class="line">writer.book = book</span><br><span class="line">df1.to_excel(writer,sheet_name=<span class="string">&quot;A&quot;</span>)</span><br><span class="line">df2.to_excel(writer,sheet_name=<span class="string">&quot;B&quot;</span>)</span><br><span class="line">writer.save()</span><br><span class="line"><span class="comment">#这样df1和df2数据分别就在文件2017.xlsx中的A和B工作表中</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——DataFrame、List、字典相互转换</title>
+      <link href="/posts/6b08c33d.html"/>
+      <url>/posts/6b08c33d.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="list-列表转-dataframe表">list 列表转 Dataframe表</h1><p>——创建新列a</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">20</span>))</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>]</span><br></pre></td></tr></table></figure><p>——把a列表传入已有表data2</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data2[<span class="string">&#x27;b&#x27;</span>] = pd.DataFrame(a) </span><br></pre></td></tr></table></figure><img src="/posts/6b08c33d/image-20230621001734496.png" class="" title="image-20230621001734496"><h1 id="字典转dataframe表">字典转Dataframe表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_set = [&#123; <span class="string">&#x27;a&#x27;</span> :[<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27; 1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span> ,<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>],<span class="string">&#x27;b&#x27;</span>:[<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>]&#125;]</span><br><span class="line">data = pd.DataFrame(data_set)  </span><br><span class="line">data</span><br></pre></td></tr></table></figure><img src="/posts/6b08c33d/1695563791833.png" class="" width="1695563791833"><h1 id="嵌套列表转dataframe表">嵌套列表转Dataframe表</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_set = [[<span class="string">&#x27; 1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span> ,<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>],[<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>]]</span><br><span class="line">data = pd.DataFrame(data_set) </span><br><span class="line">data</span><br></pre></td></tr></table></figure><img src="/posts/6b08c33d/1695563801671.png" class="" width="1695563801671">]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
             
         </tags>
       
@@ -156,6 +306,81 @@
     
     
     <entry>
+      <title>Python——把几个DataFrame合并成一个DataFrame</title>
+      <link href="/posts/11ccf714.html"/>
+      <url>/posts/11ccf714.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="横向合并-merge">横向合并——merge</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = pd.merge(left, right, on=<span class="string">&#x27;key&#x27;</span>)</span><br></pre></td></tr></table></figure><img src="/posts/11ccf714/0a360be1b20d4e3b8566bd7ff86ae058.png" class="" title="img"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = pd.merge(left, right, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;left&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;right&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;outer&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br></pre></td></tr></table></figure><h1 id="横向合并-join">横向合并——join</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = left.join(right, on=key_or_keys) <span class="comment">#共同指标的关键词</span></span><br><span class="line">result = pd.merge(left, right, left_on=key_or_keys, right_index=<span class="literal">True</span>,how=<span class="string">&#x27;left&#x27;</span>, sort=<span class="literal">False</span>)</span><br><span class="line">result = left.join(right, on=<span class="string">&#x27;key&#x27;</span>)</span><br></pre></td></tr></table></figure><h1 id="竖向合并-append">竖向合并——append</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = df1.append(df2)</span><br></pre></td></tr></table></figure><img src="/posts/11ccf714/21805bb095bd40588c516bd08af5a0ff.png" class="" title="img"><h1 id="竖向合并-concat">竖向合并——concat</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frames = [df1, df2, df3]</span><br><span class="line">result = pd.concat(frames)</span><br></pre></td></tr></table></figure><img src="/posts/11ccf714/c3595b658d274d4abf8a2d2425aedabe.png" class="" title="img">]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——一维转二维、二维转一维</title>
+      <link href="/posts/ae5b425e.html"/>
+      <url>/posts/ae5b425e.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="一维转二维">一维转二维</h1><blockquote><p>两列数据转为化以一列为标签的多列数据，按行按列分类汇总</p><p>——数据透视表实现</p></blockquote><h2 id="pivot简介：">pivot简介：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pivot(index=None,columns=None,values=None)</span><br></pre></td></tr></table></figure><blockquote><p>index：指定哪一列数据为结果Dataframe的索引；<br>columns：指定哪一列数据作为结果Dataframe的列名；<br>values：指定哪一列数据作为结果Dataframe的值。</p></blockquote><p>原：</p><img src="/posts/ae5b425e/image-20230621000620038.png" class="" title="image-20230621000620038"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">study_information3 = study_information2.pivot(index=<span class="string">&#x27;user_id&#x27;</span>,columns=<span class="string">&#x27;course_id&#x27;</span>,values=<span class="string">&#x27;user_id&#x27;</span>)</span><br></pre></td></tr></table></figure><img src="/posts/ae5b425e/image-20230621000715942.png" class="" title="image-20230621000715942"><h2 id="pivot-table简介：">pivot_table简介：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DataFrame.pivot_table(values=<span class="literal">None</span>, index=<span class="literal">None</span>, columns=<span class="literal">None</span>, aggfunc=<span class="string">&#x27;mean&#x27;</span>,</span><br><span class="line">                      fill_value=<span class="literal">None</span>, margins=<span class="literal">False</span>, dropna=<span class="literal">True</span>, margins_name=<span class="string">&#x27;All&#x27;</span>)</span><br></pre></td></tr></table></figure><blockquote><p>values、index、columns：与pivot相同用法；<br>aggfunc：用于聚合的函数，默认为numpy，mean，支持numpy计算方法；<br>fill_value：填充NA值，默认不填充；<br>margins：指定是否显示边界以及边界上的数据，添加行列的总计，默认不显示；<br>dropna：如果整行都为NA值，则进行丢弃，默认丢弃；<br>margins_name：在margins参数为true时，用来修改margins的名称，用来指定边界数据的索引名称和列名。</p></blockquote><h1 id="二维转一维">二维转一维</h1><p>原：</p><p>后：</p><h2 id="melt函数简介：">melt函数简介：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j1 = pd.melt(j1,[<span class="string">&#x27;小类&#x27;</span>,<span class="string">&#x27;品名&#x27;</span>])</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——获取指定列中包含某一字符的所有行</title>
+      <link href="/posts/477a5b5e.html"/>
+      <url>/posts/477a5b5e.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="获取列名中包含-指定字符-这个字符串的所有行">获取列名中包含“指定字符”这个字符串的所有行</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = df[df[<span class="string">&#x27;列名&#x27;</span>].isin([<span class="string">&#x27;指定字符&#x27;</span>])]</span><br></pre></td></tr></table></figure><p>例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Login_china = Login_he[Login_he[<span class="string">&#x27;guobie&#x27;</span>].isin([<span class="string">&quot;中国&quot;</span>])]</span><br></pre></td></tr></table></figure> <img src="/posts/477a5b5e/image-20230621000148496.png" class="" title="image-20230621000148496"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = data.loc[data[<span class="string">&#x27;列名&#x27;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;指定字符&quot;</span>)] <span class="comment"># 获取列名中包含“指定字符”这个字符串的所有行</span></span><br><span class="line">data = data.loc[:, [<span class="string">&#x27;1列&#x27;</span>, <span class="string">&#x27;2列&#x27;</span>]] <span class="comment"># 只取“1列”和“2列”这两列</span></span><br></pre></td></tr></table></figure><p>例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Login_nei = Login.loc[Login[<span class="string">&#x27;login_place&#x27;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;内蒙古&quot;</span>)] </span><br></pre></td></tr></table></figure><img src="/posts/477a5b5e/image-20230621000219550.png" class="" title="image-20230621000219550"><h1 id="通过-取反-选取不包含指定字符的所有行">通过~取反，选取不包含指定字符的所有行</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = df[~df[<span class="string">&#x27;列名&#x27;</span>].isin([<span class="string">&#x27;指定字符&#x27;</span>])]</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>plot函数、基本图像属性设置、中文显示问题解决方法、子图设置</title>
       <link href="/posts/d025ff40.html"/>
       <url>/posts/d025ff40.html</url>
@@ -181,11 +406,11 @@
     
     
     <entry>
-      <title>Python日常记录笔记</title>
-      <link href="/posts/2b6b9f44.html"/>
-      <url>/posts/2b6b9f44.html</url>
+      <title>Python——提取符号、表格拆分数据（指定分隔符、分列）</title>
+      <link href="/posts/4df4e4ac.html"/>
+      <url>/posts/4df4e4ac.html</url>
       
-        <content type="html"><![CDATA[<h1 id="安装anaconda">安装anaconda</h1><blockquote><p>清华大学开源软件镜像站：<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&amp;O=D">Index of /anaconda/archive/ | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror</a></p><p>安装步骤：</p></blockquote><h1 id="修改jupyter文件存储路径">修改jupyter文件存储路径</h1><p>第一步：首先查找当前路径，打开Anaconda prompt ，输入：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure><p>第二步：找到 C:\Users\Administrator.jupyter下的 <strong>C:\Users\chen_.jupyter\jupyter_notebook_config.py</strong></p><p>第三步：找到 C:\Users\Administrator.jupyter下的 <strong># c.NotebookApp.notebook_dir = ‘’</strong>，修改为以下路径：</p><h1 id="安装插件">安装插件</h1><blockquote><p>窗口分面：Scratchpad<br>Markdown文本高亮：Highlighter<br>Cell标记、锁定：Runtools<br>代码折叠：Code folding<br>example、document快速获取：Snippets menu<br>PEP8 代码优化：Code prettify<br>代码补全：Hinterland<br>显示行号：Toggle all line numbers<br>添加目录：Table of Contents (2)<br>按标题折叠：Collapsible headings<br>文件过滤：Tree Filter<br>代码字号收缩：Code Font Size<br>字符选中高亮：Highlight selected word<br>快捷键编辑：Keyboard shortcut editor<br>编辑模式切换：Select CodeMirror Keymap<br>变量收集浮窗：Variable Inspector</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator -i </span><br></pre></td></tr></table></figure><h1 id="提取符号-表格拆分数据-指定分隔符-分列">提取符号、表格拆分数据（指定分隔符、分列）</h1><h2 id="指定多个分隔符-re-split">指定多个分隔符——re.split()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&#x27;3,5.6:6&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(re.split(<span class="string">&#x27;[.,:]&#x27;</span>,text))</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出 </span></span><br><span class="line">[<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;6&#x27;</span>]</span><br></pre></td></tr></table></figure><h2 id="表格分列-str-split">表格分列——str.split()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandas.Series.<span class="built_in">str</span>.split(pat=<span class="literal">None</span>, n=-<span class="number">1</span>, expand=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure><blockquote><p>pat表示分隔符，默认以空格分隔；n表示分割次数，默认为 -1，即分隔所有；expand为true，表示会把切割出来的内容当做一列，产生多列，若为False，则把切割后的内容当作一个列表。</p></blockquote><h2 id="提取前几个字符">提取前几个字符</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x[0:2]前二位</span></span><br><span class="line">df[<span class="string">&#x27;列名&#x27;</span>]=df[<span class="string">&#x27;列名&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">0</span>:<span class="number">2</span>]).tolist()</span><br></pre></td></tr></table></figure><p>实例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Login_nei[<span class="string">&#x27;shengfen&#x27;</span>] = Login_nei[<span class="string">&#x27;login_place&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">2</span>:<span class="number">5</span>]).tolist()</span><br><span class="line">Login_nei[<span class="string">&#x27;chengshi&#x27;</span>] = Login_nei[<span class="string">&#x27;login_place&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">5</span>:]).tolist()</span><br><span class="line">Login_nei.head()</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/image-20230620235657095-16872766220941.png" class="" title="image-20230620235657095"><h2 id="指定分隔符分列">指定分隔符分列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将日期与时间分割</span></span><br><span class="line">Login1 = Login[<span class="string">&quot;login_time&quot;</span>].<span class="built_in">str</span>.split(<span class="string">&quot; &quot;</span>,expand=<span class="literal">True</span>).fillna(<span class="string">&quot;&quot;</span>)</span><br><span class="line">Login1[<span class="string">&#x27;login_data&#x27;</span>] = Login1[<span class="number">0</span>]</span><br><span class="line">Login1[<span class="string">&#x27;login_hour&#x27;</span>] = Login1[<span class="number">1</span>]</span><br><span class="line">Login1[<span class="string">&#x27;user_id&#x27;</span>] = Login[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">Login2 = Login1[[<span class="string">&#x27;user_id&#x27;</span>,<span class="string">&#x27;login_data&#x27;</span>,<span class="string">&#x27;login_hour&#x27;</span>]]</span><br><span class="line">Login2.head()</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/image-20230620235716435.png" class="" title="image-20230620235716435"><h1 id="获取指定列中包含某一字符的所有行">获取指定列中包含某一字符的所有行</h1><h2 id="获取列名中包含-指定字符-这个字符串的所有行">获取列名中包含“指定字符”这个字符串的所有行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = df[df[<span class="string">&#x27;列名&#x27;</span>].isin([<span class="string">&#x27;指定字符&#x27;</span>])]</span><br></pre></td></tr></table></figure><p>例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Login_china = Login_he[Login_he[<span class="string">&#x27;guobie&#x27;</span>].isin([<span class="string">&quot;中国&quot;</span>])]</span><br></pre></td></tr></table></figure> <img src="/posts/2b6b9f44/image-20230621000148496.png" class="" title="image-20230621000148496"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = data.loc[data[<span class="string">&#x27;列名&#x27;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;指定字符&quot;</span>)] <span class="comment"># 获取列名中包含“指定字符”这个字符串的所有行</span></span><br><span class="line">data = data.loc[:, [<span class="string">&#x27;1列&#x27;</span>, <span class="string">&#x27;2列&#x27;</span>]] <span class="comment"># 只取“1列”和“2列”这两列</span></span><br></pre></td></tr></table></figure><p>例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Login_nei = Login.loc[Login[<span class="string">&#x27;login_place&#x27;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;内蒙古&quot;</span>)] </span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/image-20230621000219550.png" class="" title="image-20230621000219550"><h2 id="通过-取反-选取不包含指定字符的所有行">通过~取反，选取不包含指定字符的所有行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = df[~df[<span class="string">&#x27;列名&#x27;</span>].isin([<span class="string">&#x27;指定字符&#x27;</span>])]</span><br></pre></td></tr></table></figure><h1 id="一维转二维">一维转二维</h1><blockquote><p>两列数据转为化以一列为标签的多列数据，按行按列分类汇总</p><p>——数据透视表实现</p></blockquote><h2 id="pivot简介：">pivot简介：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pivot(index=None,columns=None,values=None)</span><br></pre></td></tr></table></figure><blockquote><p>index：指定哪一列数据为结果Dataframe的索引；<br>columns：指定哪一列数据作为结果Dataframe的列名；<br>values：指定哪一列数据作为结果Dataframe的值。</p></blockquote><p>原：</p><img src="/posts/2b6b9f44/image-20230621000620038.png" class="" title="image-20230621000620038"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">study_information3 = study_information2.pivot(index=<span class="string">&#x27;user_id&#x27;</span>,columns=<span class="string">&#x27;course_id&#x27;</span>,values=<span class="string">&#x27;user_id&#x27;</span>)</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/image-20230621000715942.png" class="" title="image-20230621000715942"><h2 id="pivot-table简介：">pivot_table简介：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DataFrame.pivot_table(values=<span class="literal">None</span>, index=<span class="literal">None</span>, columns=<span class="literal">None</span>, aggfunc=<span class="string">&#x27;mean&#x27;</span>,</span><br><span class="line">                      fill_value=<span class="literal">None</span>, margins=<span class="literal">False</span>, dropna=<span class="literal">True</span>, margins_name=<span class="string">&#x27;All&#x27;</span>)</span><br></pre></td></tr></table></figure><blockquote><p>values、index、columns：与pivot相同用法；<br>aggfunc：用于聚合的函数，默认为numpy，mean，支持numpy计算方法；<br>fill_value：填充NA值，默认不填充；<br>margins：指定是否显示边界以及边界上的数据，添加行列的总计，默认不显示；<br>dropna：如果整行都为NA值，则进行丢弃，默认丢弃；<br>margins_name：在margins参数为true时，用来修改margins的名称，用来指定边界数据的索引名称和列名。</p></blockquote><h1 id="二维转一维">二维转一维</h1><p>原：</p><img src="/posts/2b6b9f44/1691679822742.png" class="" width="1691679822742"><p>后：</p><img src="/posts/2b6b9f44/1691679661473.png" class="" width="1691679661473"><h2 id="melt函数简介：">melt函数简介：</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">j1 = pd.melt(j1,[<span class="string">&#x27;小类&#x27;</span>,<span class="string">&#x27;品名&#x27;</span>])</span><br></pre></td></tr></table></figure><h1 id="把几个dataframe合并成一个dataframe">把几个DataFrame合并成一个DataFrame</h1><h2 id="横向合并-merge">横向合并——merge</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = pd.merge(left, right, on=<span class="string">&#x27;key&#x27;</span>)</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/0a360be1b20d4e3b8566bd7ff86ae058.png" class="" title="img"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result = pd.merge(left, right, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;left&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;right&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br><span class="line">result = pd.merge(left, right, how=<span class="string">&#x27;outer&#x27;</span>, on=[<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>])</span><br></pre></td></tr></table></figure><h2 id="横向合并-join">横向合并——join</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result = left.join(right, on=key_or_keys) <span class="comment">#共同指标的关键词</span></span><br><span class="line">result = pd.merge(left, right, left_on=key_or_keys, right_index=<span class="literal">True</span>,how=<span class="string">&#x27;left&#x27;</span>, sort=<span class="literal">False</span>)</span><br><span class="line">result = left.join(right, on=<span class="string">&#x27;key&#x27;</span>)</span><br></pre></td></tr></table></figure><h2 id="竖向合并-append">竖向合并——append</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = df1.append(df2)</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/21805bb095bd40588c516bd08af5a0ff.png" class="" title="img"><h2 id="竖向合并-concat">竖向合并——concat</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">frames = [df1, df2, df3]</span><br><span class="line">result = pd.concat(frames)</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/c3595b658d274d4abf8a2d2425aedabe.png" class="" title="img"><h1 id="dataframe和list相互转换">DataFrame和List相互转换</h1><h2 id="list列表转dataframe表">list列表转Dataframe表</h2><p>——创建新列a</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">20</span>))</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>]</span><br></pre></td></tr></table></figure><p>——把a列表传入已有表data2</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data2[<span class="string">&#x27;b&#x27;</span>] = pd.DataFrame(a) </span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/image-20230621001734496.png" class="" title="image-20230621001734496"><h2 id="字典转dataframe表">字典转Dataframe表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_set = [&#123; <span class="string">&#x27;a&#x27;</span> :[<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27; 1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span> ,<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>],<span class="string">&#x27;b&#x27;</span>:[<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>]&#125;]</span><br><span class="line">data = pd.DataFrame(data_set)  </span><br><span class="line">data</span><br></pre></td></tr></table></figure> <img src="/posts/2b6b9f44/8131d977e6704200abb42352bd1d94af.png" class="" title="img"><h2 id="嵌套列表转dataframe表">嵌套列表转Dataframe表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_set = [[<span class="string">&#x27; 1&#x27;</span>, <span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;3&#x27;</span> ,<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;5&#x27;</span>],[<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;f&#x27;</span>,<span class="string">&#x27;g&#x27;</span>,<span class="string">&#x27;h&#x27;</span>]]</span><br><span class="line">data = pd.DataFrame(data_set) </span><br><span class="line">data</span><br></pre></td></tr></table></figure><img src="/posts/2b6b9f44/79e01fa89bfc49139878620b0c6fc977.png" class="" title="img">]]></content>
+        <content type="html"><![CDATA[<h1 id="指定多个分隔符-re-split">指定多个分隔符——re.split()</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">text=<span class="string">&#x27;3,5.6:6&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(re.split(<span class="string">&#x27;[.,:]&#x27;</span>,text))</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出 </span></span><br><span class="line">[<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;6&#x27;</span>, <span class="string">&#x27;6&#x27;</span>]</span><br></pre></td></tr></table></figure><h1 id="表格分列-str-split">表格分列——str.split()</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandas.Series.<span class="built_in">str</span>.split(pat=<span class="literal">None</span>, n=-<span class="number">1</span>, expand=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure><blockquote><p>pat表示分隔符，默认以空格分隔；n表示分割次数，默认为 -1，即分隔所有；</p><p>expand为true，表示会把切割出来的内容当做一列，产生多列，若为False，则把切割后的内容当作一个列表。</p></blockquote><h1 id="提取前几个字符">提取前几个字符</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># x[0:2]前二位</span></span><br><span class="line">df[<span class="string">&#x27;列名&#x27;</span>]=df[<span class="string">&#x27;列名&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">0</span>:<span class="number">2</span>]).tolist()</span><br></pre></td></tr></table></figure><p>实例</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Login_nei[<span class="string">&#x27;shengfen&#x27;</span>] = Login_nei[<span class="string">&#x27;login_place&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">2</span>:<span class="number">5</span>]).tolist()</span><br><span class="line">Login_nei[<span class="string">&#x27;chengshi&#x27;</span>] = Login_nei[<span class="string">&#x27;login_place&#x27;</span>].apply(<span class="keyword">lambda</span> x:x[<span class="number">5</span>:]).tolist()</span><br><span class="line">Login_nei.head()</span><br></pre></td></tr></table></figure><img src="/posts/4df4e4ac/image-20230620235657095-16872766220941.png" class="" title="image-20230620235657095"><h2 id="指定分隔符分列">指定分隔符分列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将日期与时间分割</span></span><br><span class="line">Login1 = Login[<span class="string">&quot;login_time&quot;</span>].<span class="built_in">str</span>.split(<span class="string">&quot; &quot;</span>,expand=<span class="literal">True</span>).fillna(<span class="string">&quot;&quot;</span>)</span><br><span class="line">Login1[<span class="string">&#x27;login_data&#x27;</span>] = Login1[<span class="number">0</span>]</span><br><span class="line">Login1[<span class="string">&#x27;login_hour&#x27;</span>] = Login1[<span class="number">1</span>]</span><br><span class="line">Login1[<span class="string">&#x27;user_id&#x27;</span>] = Login[<span class="string">&#x27;user_id&#x27;</span>]</span><br><span class="line">Login2 = Login1[[<span class="string">&#x27;user_id&#x27;</span>,<span class="string">&#x27;login_data&#x27;</span>,<span class="string">&#x27;login_hour&#x27;</span>]]</span><br><span class="line">Login2.head()</span><br></pre></td></tr></table></figure><img src="/posts/4df4e4ac/image-20230620235716435.png" class="" title="image-20230620235716435">]]></content>
       
       
       <categories>
@@ -1069,6 +1294,31 @@
             <tag> 数据可视化 </tag>
             
             <tag> pyecharts库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python——安装、插件</title>
+      <link href="/posts/2b6b9f44.html"/>
+      <url>/posts/2b6b9f44.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="安装anaconda">安装anaconda</h1><blockquote><p>清华大学开源软件镜像站：<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/?C=M&amp;O=D">Index of /anaconda/archive/ | 清华大学开源软件镜像站 | Tsinghua Open Source Mirror</a></p><p>安装步骤：</p></blockquote><h1 id="修改jupyter文件存储路径">修改jupyter文件存储路径</h1><p>第一步：首先查找当前路径，打开Anaconda prompt ，输入：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure><p>第二步：找到 C:\Users\Administrator.jupyter下的 <strong>C:\Users\chen_.jupyter\jupyter_notebook_config.py</strong></p><p>第三步：找到 C:\Users\Administrator.jupyter下的 <strong># c.NotebookApp.notebook_dir = ‘’</strong>，修改为以下路径：</p><h1 id="安装插件">安装插件</h1><blockquote><p>窗口分面：Scratchpad<br>Markdown文本高亮：Highlighter<br>Cell标记、锁定：Runtools<br>代码折叠：Code folding<br>example、document快速获取：Snippets menu<br>PEP8 代码优化：Code prettify<br>代码补全：Hinterland<br>显示行号：Toggle all line numbers<br>添加目录：Table of Contents (2)<br>按标题折叠：Collapsible headings<br>文件过滤：Tree Filter<br>代码字号收缩：Code Font Size<br>字符选中高亮：Highlight selected word<br>快捷键编辑：Keyboard shortcut editor<br>编辑模式切换：Select CodeMirror Keymap<br>变量收集浮窗：Variable Inspector</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator -i </span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
             
         </tags>
       
