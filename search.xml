@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Python——word文档</title>
+      <link href="/posts/b382cbf3.html"/>
+      <url>/posts/b382cbf3.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="安装库">安装库</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install python-docx</span><br></pre></td></tr></table></figure><p><a href="https://zhuanlan.zhihu.com/p/317074324">Python自动化办公之Word，全网最全看这一篇就够了 - 知乎 (zhihu.com)</a></p><h1 id="使用说明">使用说明</h1><p>**Python-Docx的官网提供了使用文档：**该文档说明了如何使用Python-Docx的所有功能，并包含完整的API参考。在下载中包含的示例中也很好地展示了Python-Docx的功能。</p><img src="/posts/b382cbf3/image-20231029221802506.png" class="" title="例"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1、导入python-docx库</span></span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">from</span> docx.shared <span class="keyword">import</span> Inches</span><br><span class="line"></span><br><span class="line">document = Document()</span><br><span class="line">document.add_heading(<span class="string">&#x27;Document Title&#x27;</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2、新建wrod文档、一级、二级、三级标题、自然段</span></span><br><span class="line">p = document.add_paragraph(<span class="string">&#x27;A plain paragraph having some &#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3、设置字体格式</span></span><br><span class="line">p.add_run(<span class="string">&#x27;bold&#x27;</span>).bold = <span class="literal">True</span></span><br><span class="line">p.add_run(<span class="string">&#x27; and some &#x27;</span>)</span><br><span class="line">p.add_run(<span class="string">&#x27;italic.&#x27;</span>).italic = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">document.add_heading(<span class="string">&#x27;Heading, level 1&#x27;</span>, level=<span class="number">1</span>)</span><br><span class="line">document.add_paragraph(<span class="string">&#x27;Intense quote&#x27;</span>, style=<span class="string">&#x27;Intense Quote&#x27;</span>)</span><br><span class="line"></span><br><span class="line">document.add_paragraph(<span class="string">&#x27;first item in unordered list&#x27;</span>, style=<span class="string">&#x27;List Bullet&#x27;</span>)</span><br><span class="line">document.add_paragraph(<span class="string">&#x27;first item in ordered list&#x27;</span>, style=<span class="string">&#x27;List Number&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4、在指定位置添加图片</span></span><br><span class="line">document.add_picture(<span class="string">&#x27;r1.jpg&#x27;</span>, width=Inches(<span class="number">1.25</span>))</span><br><span class="line"></span><br><span class="line">records = (</span><br><span class="line">    (<span class="number">3</span>, <span class="string">&#x27;101&#x27;</span>, <span class="string">&#x27;Spam&#x27;</span>),</span><br><span class="line">    (<span class="number">7</span>, <span class="string">&#x27;422&#x27;</span>, <span class="string">&#x27;Eggs&#x27;</span>),</span><br><span class="line">    (<span class="number">4</span>, <span class="string">&#x27;631&#x27;</span>, <span class="string">&#x27;Spam, spam, eggs, and spam&#x27;</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment"># 5、在指定位置添加表格</span></span><br><span class="line">table = document.add_table(rows=<span class="number">1</span>, cols=<span class="number">3</span>)</span><br><span class="line">hdr_cells = table.rows[<span class="number">0</span>].cells</span><br><span class="line">hdr_cells[<span class="number">0</span>].text = <span class="string">&#x27;Qty&#x27;</span></span><br><span class="line">hdr_cells[<span class="number">1</span>].text = <span class="string">&#x27;Id&#x27;</span></span><br><span class="line">hdr_cells[<span class="number">2</span>].text = <span class="string">&#x27;Desc&#x27;</span></span><br><span class="line"><span class="keyword">for</span> qty, <span class="built_in">id</span>, desc <span class="keyword">in</span> records:</span><br><span class="line">    row_cells = table.add_row().cells</span><br><span class="line">    row_cells[<span class="number">0</span>].text = <span class="built_in">str</span>(qty)</span><br><span class="line">    row_cells[<span class="number">1</span>].text = <span class="built_in">id</span></span><br><span class="line">    row_cells[<span class="number">2</span>].text = desc</span><br><span class="line"></span><br><span class="line">document.add_page_break()</span><br><span class="line"><span class="comment"># 6、文档另存为</span></span><br><span class="line">document.save(<span class="string">&#x27;demo.docx&#x27;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python操作记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>添加表格</title>
       <link href="/posts/d71a040e.html"/>
       <url>/posts/d71a040e.html</url>
@@ -655,11 +680,11 @@
       
         <tags>
             
+            <tag> camp </tag>
+            
             <tag> bar </tag>
             
             <tag> barh </tag>
-            
-            <tag> camp </tag>
             
         </tags>
       
@@ -709,11 +734,11 @@
       
         <tags>
             
-            <tag> camp </tag>
-            
             <tag> scatter </tag>
             
             <tag> text </tag>
+            
+            <tag> camp </tag>
             
         </tags>
       
